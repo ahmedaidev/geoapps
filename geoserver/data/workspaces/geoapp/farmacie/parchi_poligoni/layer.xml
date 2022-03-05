@@ -1,0 +1,16 @@
+<layer>
+  <name>parchi_poligoni</name>
+  <id>LayerInfoImpl--605f7ec6:17b6568a67c:-7ffa</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl--2785515b:17b65247bb1:-7ffe</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl--605f7ec6:17b6568a67c:-7ffb</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+  <dateCreated>2021-08-20 21:19:47.229 UTC</dateCreated>
+</layer>

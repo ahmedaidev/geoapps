@@ -1,0 +1,6 @@
+{
+  "appId": "com.geoapp.interesse",
+  "appName": "app_interesse",
+  "webDir": "build",
+  "bundledWebRuntime": false
+}

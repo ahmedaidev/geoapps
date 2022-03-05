@@ -1,0 +1,41 @@
+<featureType>
+  <id>FeatureTypeInfoImpl--605f7ec6:17b6568a67c:-7ffb</id>
+  <name>parchi_poligoni</name>
+  <nativeName>parchi_poligoni</nativeName>
+  <namespace>
+    <id>NamespaceInfoImpl--4d8a503:17b6526dcb4:-7ffb</id>
+  </namespace>
+  <title>parchi_poligoni</title>
+  <keywords>
+    <string>parchi_poligoni</string>
+    <string>features</string>
+  </keywords>
+  <srs>EPSG:404000</srs>
+  <nativeBoundingBox>
+    <minx>10.973947525024414</minx>
+    <maxx>11.013832092285156</maxx>
+    <miny>45.42938232421875</miny>
+    <maxy>45.45220184326172</maxy>
+  </nativeBoundingBox>
+  <latLonBoundingBox>
+    <minx>10.973947525024414</minx>
+    <maxx>11.013832092285156</maxx>
+    <miny>45.42938232421875</miny>
+    <maxy>45.45220184326172</maxy>
+    <crs>EPSG:4326</crs>
+  </latLonBoundingBox>
+  <projectionPolicy>FORCE_DECLARED</projectionPolicy>
+  <enabled>true</enabled>
+  <store class="dataStore">
+    <id>DataStoreInfoImpl--4d8a503:17b6526dcb4:-7ffa</id>
+  </store>
+  <serviceConfiguration>false</serviceConfiguration>
+  <simpleConversionEnabled>false</simpleConversionEnabled>
+  <maxFeatures>0</maxFeatures>
+  <numDecimals>0</numDecimals>
+  <padWithZeros>false</padWithZeros>
+  <forcedDecimal>false</forcedDecimal>
+  <overridingServiceSRS>false</overridingServiceSRS>
+  <skipNumberMatched>false</skipNumberMatched>
+  <circularArcPresent>false</circularArcPresent>
+</featureType>

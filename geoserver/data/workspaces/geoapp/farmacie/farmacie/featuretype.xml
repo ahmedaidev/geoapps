@@ -1,0 +1,44 @@
+<featureType>
+  <id>FeatureTypeInfoImpl--4d8a503:17b6526dcb4:-7ff9</id>
+  <name>farmacie</name>
+  <nativeName>farmacie</nativeName>
+  <namespace>
+    <id>NamespaceInfoImpl--4d8a503:17b6526dcb4:-7ffb</id>
+  </namespace>
+  <title>Farmacie</title>
+  <keywords>
+    <string>features</string>
+    <string>farmacie</string>
+  </keywords>
+  <srs>EPSG:4326</srs>
+  <nativeBoundingBox>
+    <minx>10.8984375</minx>
+    <maxx>11.063633918762207</maxx>
+    <miny>45.38178634643555</miny>
+    <maxy>45.49707794189453</maxy>
+  </nativeBoundingBox>
+  <latLonBoundingBox>
+    <minx>10.8984375</minx>
+    <maxx>11.063633918762207</maxx>
+    <miny>45.38178634643555</miny>
+    <maxy>45.49707794189453</maxy>
+    <crs>EPSG:4326</crs>
+  </latLonBoundingBox>
+  <projectionPolicy>FORCE_DECLARED</projectionPolicy>
+  <enabled>true</enabled>
+  <metadata>
+    <entry key="cachingEnabled">false</entry>
+  </metadata>
+  <store class="dataStore">
+    <id>DataStoreInfoImpl--4d8a503:17b6526dcb4:-7ffa</id>
+  </store>
+  <serviceConfiguration>false</serviceConfiguration>
+  <simpleConversionEnabled>false</simpleConversionEnabled>
+  <maxFeatures>0</maxFeatures>
+  <numDecimals>0</numDecimals>
+  <padWithZeros>false</padWithZeros>
+  <forcedDecimal>false</forcedDecimal>
+  <overridingServiceSRS>false</overridingServiceSRS>
+  <skipNumberMatched>false</skipNumberMatched>
+  <circularArcPresent>false</circularArcPresent>
+</featureType>

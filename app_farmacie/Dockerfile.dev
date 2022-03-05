@@ -1,0 +1,11 @@
+FROM node:14-alpine
+
+ENV REACT_APP_API_URL=http://geoserver:8080
+ENV BROWSER=none
+
+WORKDIR /app
+COPY ./package.json ./
+RUN npm install
+COPY ./ ./
+
+CMD ["npm", "run", "start"]

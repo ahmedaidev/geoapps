@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  database:
+    image: postgis/postgis
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  geoserver:
+    image: thinkwhere/geoserver
+    volumes:
+      - ./geoserver/data:/opt/geoserver/data_dir
+      - ./geoserver/tomcat-conf:/usr/local/tomcat/conf
+    ports:
+      - 8080:8080
+
+  farmacie:
+    build:
+      context: ./app_farmacie
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./app_farmacie:/app
+    ports:
+      - 3000:3000
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.dev
+    ports:
+      - '80:80'
+
+volumes:
+  postgres_data:
