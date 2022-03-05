@@ -1,0 +1,41 @@
+---
+- name: Install python3, docker, docker-compose
+  hosts: default
+  become: yes
+  gather_facts: no
+  tasks:
+    - name: Install python3 and docker
+      vars:
+        ansible_python_interpreter: /usr/bin/python
+      apt:
+        pkg:
+          - python3
+          - docker
+        update_cache: yes
+        state: present
+    - name: Install Docker-compose
+      get_url:
+        url: https://github.com/docker/compose/releases/download/1.27.4/docker-compose-Linux-{{lookup('pipe', 'uname -m')}}
+        dest: /usr/local/bin/docker-compose
+        mode: +x
+    - name: Start docker daemon
+      systemd:
+        name: docker
+        state: started
+    - name: Install docker python module
+      pip:
+        name:
+          - docker
+          - docker-compose
+
+- name: Add ubuntu to docker group
+  hosts: default
+  become: yes
+  tasks:
+    - name: Add ubuntu to docker group
+      user:
+        name: ubuntu
+        groups: docker
+        append: yes
+    - name: Reconnect to server session
+      meta: reset_connection

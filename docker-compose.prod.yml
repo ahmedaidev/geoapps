@@ -21,31 +21,13 @@ services:
       - 8080:8080
 
   farmacie:
-    build:
-      context: ./app_farmacie
-      dockerfile: Dockerfile.dev
-    volumes:
-      - /app/node_modules
-      - ./app_farmacie:/app
-    ports:
-      - 3000:3000
+    build: ./app_farmacie
 
   parchi:
-    build:
-      context: ./app_parchi
-      dockerfile: Dockerfile.dev
-    volumes:
-      - /app/node_modules
-      - ./app_parchi:/app
-    ports:
-      - 3001:3000
+    build: ./app_parchi
 
   nginx:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile.dev
-    volumes:
-      - ./nginx:/etc/nginx
+    build: ./nginx
     ports:
       - '80:80'
 
