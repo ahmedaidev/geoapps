@@ -1,6 +1,7 @@
 FROM node:14-alpine as builder
 
 ENV REACT_APP_GEOSERVER_URL="http://geoserver.devopslabs.xyz"
+ENV REACT_APP_GEOSERVER_WORKSPACE="geoapp"
 
 WORKDIR /app
 COPY ./package.json ./
