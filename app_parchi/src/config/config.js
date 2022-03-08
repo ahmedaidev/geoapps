@@ -1,1 +1,1 @@
-export const url = `/geoserver/geoapp/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geoapp%3Aparchi_poligoni&maxFeatures=50&outputFormat=application%2Fjson`
+export const url = `${process.env.REACT_APP_GEOSERVER_URL}/geoserver/geoapp/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geoapp%3Aparchi_poligoni&maxFeatures=50&outputFormat=application%2Fjson`

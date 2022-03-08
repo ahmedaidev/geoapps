@@ -1,6 +1,7 @@
 <dataStore>
   <id>DataStoreInfoImpl--4d8a503:17b6526dcb4:-7ffa</id>
-  <name>farmacie</name>
+  <name>geoapp</name>
+  <description>GeoApp database</description>
   <type>PostGIS</type>
   <enabled>true</enabled>
   <workspace>
@@ -26,7 +27,7 @@
     <entry key="create database">false</entry>
     <entry key="Method used to simplify geometries">FAST</entry>
     <entry key="port">5432</entry>
-    <entry key="passwd">crypt1:Kk340hMIfPSFRHv/pt/10hTnPN1p42w0</entry>
+    <entry key="passwd">crypt1:ruSV19Q0slonuHOjbj5vEfnwqZ0DyH8B</entry>
     <entry key="min connections">1</entry>
     <entry key="dbtype">postgis</entry>
     <entry key="namespace">geoapp</entry>
@@ -38,5 +39,5 @@
   </connectionParameters>
   <__default>false</__default>
   <dateCreated>2021-08-20 20:09:23.817 UTC</dateCreated>
-  <dateModified>2022-03-05 11:40:33.7 UTC</dateModified>
+  <dateModified>2022-03-08 09:47:31.741 UTC</dateModified>
 </dataStore>

@@ -36,6 +36,8 @@ services:
     build: ./app_scuole
 
   nginx:
+    depends_on: [farmacie, parchi, popolazione, punti_interesse, scuole]
+    restart: unless-stopped
     build: ./nginx
     ports:
       - '80:80'
