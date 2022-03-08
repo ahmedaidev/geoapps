@@ -1,4 +1,4 @@
-FROM node:14-alpine as builder
+FROM node:14-alpine
 
 ENV REACT_APP_GEOSERVER_URL="http://geoserver.devopslabs.xyz"
 ENV REACT_APP_GEOSERVER_WORKSPACE="geoapp"

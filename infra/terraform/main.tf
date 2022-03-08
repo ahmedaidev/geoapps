@@ -2,7 +2,6 @@ provider "aws" {
   region  = "eu-central-1"
 }
 
-variable env_prefix {}
 variable image_name {}
 variable instance_type {}
 
@@ -27,19 +26,21 @@ resource "aws_instance" "geoapp-server" {
 
     root_block_device {
       delete_on_termination = true
-      iops = 150
-      volume_size = 50
-      volume_type = "gp2"
+      volume_size = 20
     }
 
     tags = {
-        Name: "${var.env_prefix}-geoapp-server"
+        Name: "geoapp-server"
     }
+}
+
+data "aws_eip" "geoapp-eip" {
+  public_ip = "18.157.61.46"
 }
 
 resource "aws_eip_association" "eip_assoc" {
   instance_id   = aws_instance.geoapp-server.id
-  allocation_id = "eipalloc-0ceb3c6a9aaa4a295"
+  allocation_id = aws_eip.geoapp-eip.association_id
 }
 
 output instance_ip {

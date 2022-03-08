@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  geoservice:
+    image: ahmedaidev/geoapp_geoserver
+
+  farmacie:
+    image: ahmedaidev/geoapp_farmacie
+
+  parchi:
+    image: ahmedaidev/geoapp_parchi
+
+  popolazione:
+    image: ahmedaidev/geoapp_popolazione
+
+  punti_interesse:
+    image: ahmedaidev/geoapp_punti_interesse
+
+  scuole:
+    image: ahmedaidev/geoapp_scuole
+
+  nginx:
+    depends_on: [farmacie, parchi, popolazione, punti_interesse, scuole]
+    restart: always
+    image: ahmedaidev/geoapp_nginx
+    ports:
+      - '80:80'
