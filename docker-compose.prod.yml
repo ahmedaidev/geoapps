@@ -26,6 +26,15 @@ services:
   parchi:
     build: ./app_parchi
 
+  popolazione:
+    build: ./app_popolazione
+
+  punti_interesse:
+    build: ./app_punti_interesse
+
+  scuole:
+    build: ./app_scuole
+
   nginx:
     build: ./nginx
     ports:

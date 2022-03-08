@@ -1,4 +1,7 @@
 FROM node:14-alpine
+
+ENV REACT_APP_GEOSERVER_URL="geoserver.devopslabs.xyz"
+
 WORKDIR /app
 COPY ./package.json ./
 RUN npm install

@@ -1,1 +1,1 @@
-export const url = `/geoserver/geoapp/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geoapp:farmacie&outputFormat=application/json`
+export const url = `http://${process.env.REACT_APP_GEOSERVER_URL}/geoserver/geoapp/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geoapp:farmacie&outputFormat=application/json`

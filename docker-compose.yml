@@ -40,6 +40,36 @@ services:
     ports:
       - 3001:3000
 
+  popolazione:
+    build:
+      context: ./app_popolazione
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./app_popolazione:/app
+    ports:
+      - 3002:3000
+
+  punti_interesse:
+    build:
+      context: ./app_punti_interesse
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./app_punti_interesse:/app
+    ports:
+      - 3003:3000
+
+  scuole:
+    build:
+      context: ./app_scuole
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./app_scuole:/app
+    ports:
+      - 3004:3000
+
   nginx:
     build:
       context: ./nginx
