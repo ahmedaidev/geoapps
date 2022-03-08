@@ -3,7 +3,6 @@ version: '3'
 services:
   database:
     image: postgis/postgis
-    container_name: database
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -15,7 +14,6 @@ services:
 
   geoservice:
     image: thinkwhere/geoserver
-    container_name: geoserver
     volumes:
       - ./geoserver/data:/opt/geoserver/data_dir
       - ./geoserver/tomcat-conf:/usr/local/tomcat/conf
@@ -23,7 +21,6 @@ services:
       - 8080:8080
 
   farmacie:
-    container_name: farmacie
     build:
       context: ./app_farmacie
       dockerfile: Dockerfile.dev
@@ -32,7 +29,6 @@ services:
       - ./app_farmacie:/app
 
   parchi:
-    container_name: parchi
     build:
       context: ./app_parchi
       dockerfile: Dockerfile.dev
@@ -40,38 +36,37 @@ services:
       - /app/node_modules
       - ./app_parchi:/app
 
-  # popolazione:
-  #   build:
-  #     context: ./app_popolazione
-  #     dockerfile: Dockerfile.dev
-  #   volumes:
-  #     - /app/node_modules
-  #     - ./app_popolazione:/app
+  popolazione:
+    build:
+      context: ./app_popolazione
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./app_popolazione:/app
 
-  # punti_interesse:
-  #   build:
-  #     context: ./app_punti_interesse
-  #     dockerfile: Dockerfile.dev
-  #   volumes:
-  #     - /app/node_modules
-  #     - ./app_punti_interesse:/app
+  punti_interesse:
+    build:
+      context: ./app_punti_interesse
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./app_punti_interesse:/app
 
-  # scuole:
-  #   build:
-  #     context: ./app_scuole
-  #     dockerfile: Dockerfile.dev
-  #   volumes:
-  #     - /app/node_modules
-  #     - ./app_scuole:/app
+  scuole:
+    build:
+      context: ./app_scuole
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./app_scuole:/app
 
   nginx:
     restart: unless-stopped
-    container_name: nginx
     build:
       context: ./nginx
       dockerfile: Dockerfile.dev
     volumes:
-      - ./nginx/dev:/etc/nginx
+      - ./nginx:/etc/nginx
     ports:
       - '80:80'
 

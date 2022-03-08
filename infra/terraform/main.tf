@@ -43,6 +43,6 @@ resource "aws_eip_association" "eip_assoc" {
 }
 
 output instance_ip {
-  value       = aws_eip.geoapp-server-eip.public_ip
-  description = "Instance Elastic IP"
+  value       = aws_instance.geoapp-server.public_ip
+  description = "Instance public IP"
 }

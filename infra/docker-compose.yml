@@ -21,19 +21,19 @@ services:
       - 8080:8080
 
   farmacie:
-    build: ./app_farmacie
+    image: ahmedaidev/app_farmacie:latest
 
   parchi:
-    build: ./app_parchi
+    image: ahmedaidev/app_parchi:latest
 
   popolazione:
-    build: ./app_popolazione
+    image: ahmedaidev/app_popolazione:latest
 
   punti_interesse:
-    build: ./app_punti_interesse
+    image: ahmedaidev/app_punti_interesse:latest
 
   scuole:
-    build: ./app_scuole
+    image: ahmedaidev/app_scuole:latest
 
   nginx:
     depends_on: [farmacie, parchi, popolazione, punti_interesse, scuole]

@@ -1,6 +1,4 @@
-# Scuole di Verona
-
-[![Netlify Status](https://api.netlify.com/api/v1/badges/c191dd69-876d-44f8-9e43-af9f76bbb3b0/deploy-status)](https://app.netlify.com/sites/geo-scuole/deploys)
+# GeoApps DevOps Project
 
 # Il progetto
 
@@ -9,11 +7,6 @@ La seguente applicazione mobile nasce dall'esigenza di trovare in tempo reale ed
 # Come utilizzare l'applicazione
 
 Per utilizzare l'App è sufficiente installarla sul proprio dispositivo e selezionare i punti interattivi sulla mappa nella provincia di verona.
-
-# credits
-
-Lavoro sviluppato da Innovation Lab in collaborazione con Comune di Verona.
-![Sponsor](https://user-images.githubusercontent.com/87977853/127863204-46d984eb-4025-479b-b6e6-4bd8f8e38c5c.jpeg)
 
 # Description of the project (ENG)
 
