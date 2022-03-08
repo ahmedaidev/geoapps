@@ -1,34 +1,31 @@
 <featureType>
-  <id>FeatureTypeInfoImpl--4d8a503:17b6526dcb4:-7ff9</id>
-  <name>farmacie</name>
-  <nativeName>farmacie</nativeName>
+  <id>FeatureTypeInfoImpl-1785685:17f6978a73d:-7ff8</id>
+  <name>punti_di_interesse_geom</name>
+  <nativeName>punti_di_interesse_geom</nativeName>
   <namespace>
     <id>NamespaceInfoImpl--4d8a503:17b6526dcb4:-7ffb</id>
   </namespace>
-  <title>farmacie</title>
+  <title>punti_di_interesse_geom</title>
   <keywords>
     <string>features</string>
-    <string>farmacie</string>
+    <string>punti_di_interesse_geom</string>
   </keywords>
-  <srs>EPSG:4326</srs>
+  <srs>EPSG:404000</srs>
   <nativeBoundingBox>
-    <minx>10.8984375</minx>
-    <maxx>11.063633918762207</maxx>
-    <miny>45.38178634643555</miny>
-    <maxy>45.49707794189453</maxy>
+    <minx>10.890140533447266</minx>
+    <maxx>11.089078903198242</maxx>
+    <miny>45.393089294433594</miny>
+    <maxy>45.453067779541016</maxy>
   </nativeBoundingBox>
   <latLonBoundingBox>
-    <minx>10.8984375</minx>
-    <maxx>11.063633918762207</maxx>
-    <miny>45.38178634643555</miny>
-    <maxy>45.49707794189453</maxy>
+    <minx>10.890140533447266</minx>
+    <maxx>11.089078903198242</maxx>
+    <miny>45.393089294433594</miny>
+    <maxy>45.453067779541016</maxy>
     <crs>EPSG:4326</crs>
   </latLonBoundingBox>
   <projectionPolicy>FORCE_DECLARED</projectionPolicy>
   <enabled>true</enabled>
-  <metadata>
-    <entry key="cachingEnabled">false</entry>
-  </metadata>
   <store class="dataStore">
     <id>DataStoreInfoImpl--4d8a503:17b6526dcb4:-7ffa</id>
   </store>

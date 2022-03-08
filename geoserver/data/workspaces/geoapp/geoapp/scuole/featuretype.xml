@@ -1,34 +1,31 @@
 <featureType>
-  <id>FeatureTypeInfoImpl--4d8a503:17b6526dcb4:-7ff9</id>
-  <name>farmacie</name>
-  <nativeName>farmacie</nativeName>
+  <id>FeatureTypeInfoImpl-1785685:17f6978a73d:-7ffa</id>
+  <name>scuole</name>
+  <nativeName>scuole</nativeName>
   <namespace>
     <id>NamespaceInfoImpl--4d8a503:17b6526dcb4:-7ffb</id>
   </namespace>
-  <title>farmacie</title>
+  <title>scuole</title>
   <keywords>
     <string>features</string>
-    <string>farmacie</string>
+    <string>scuole</string>
   </keywords>
-  <srs>EPSG:4326</srs>
+  <srs>EPSG:404000</srs>
   <nativeBoundingBox>
-    <minx>10.8984375</minx>
-    <maxx>11.063633918762207</maxx>
-    <miny>45.38178634643555</miny>
-    <maxy>45.49707794189453</maxy>
+    <minx>10.898233413696289</minx>
+    <maxx>11.06943416595459</maxx>
+    <miny>45.37232208251953</miny>
+    <maxy>45.50385665893555</maxy>
   </nativeBoundingBox>
   <latLonBoundingBox>
-    <minx>10.8984375</minx>
-    <maxx>11.063633918762207</maxx>
-    <miny>45.38178634643555</miny>
-    <maxy>45.49707794189453</maxy>
+    <minx>10.898233413696289</minx>
+    <maxx>11.06943416595459</maxx>
+    <miny>45.37232208251953</miny>
+    <maxy>45.50385665893555</maxy>
     <crs>EPSG:4326</crs>
   </latLonBoundingBox>
   <projectionPolicy>FORCE_DECLARED</projectionPolicy>
   <enabled>true</enabled>
-  <metadata>
-    <entry key="cachingEnabled">false</entry>
-  </metadata>
   <store class="dataStore">
     <id>DataStoreInfoImpl--4d8a503:17b6526dcb4:-7ffa</id>
   </store>

@@ -4,7 +4,7 @@ ENV REACT_APP_GEOSERVER_URL="http://geoserver.devopslabs.xyz"
 
 WORKDIR /app
 COPY ./package.json ./
-RUN npm install
+RUN npm install --production
 COPY ./ ./
 RUN npm run build
 RUN npm install -g serve

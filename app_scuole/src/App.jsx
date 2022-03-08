@@ -8,7 +8,7 @@ import {
   IonTabButton,
   IonTabs,
 } from '@ionic/react'
-import { IonReactHashRouter } from '@ionic/react-router'
+import { IonReactRouter } from '@ionic/react-router'
 import { mapOutline, searchOutline } from 'ionicons/icons'
 
 import Map from './pages/map/Map'
@@ -39,7 +39,7 @@ import 'react-leaflet-markercluster/dist/styles.min.css'
 const App = () => {
   return (
     <IonApp>
-      <IonReactHashRouter>
+      <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
             <Route path="/map" component={Map} />
@@ -59,7 +59,7 @@ const App = () => {
             </IonTabButton>
           </IonTabBar>
         </IonTabs>
-      </IonReactHashRouter>
+      </IonReactRouter>
     </IonApp>
   )
 }

@@ -1,34 +1,31 @@
 <featureType>
-  <id>FeatureTypeInfoImpl--4d8a503:17b6526dcb4:-7ff9</id>
-  <name>farmacie</name>
-  <nativeName>farmacie</nativeName>
+  <id>FeatureTypeInfoImpl-1785685:17f6978a73d:-7ffc</id>
+  <name>popolazione_residente</name>
+  <nativeName>popolazione_residente</nativeName>
   <namespace>
     <id>NamespaceInfoImpl--4d8a503:17b6526dcb4:-7ffb</id>
   </namespace>
-  <title>farmacie</title>
+  <title>popolazione_residente</title>
   <keywords>
     <string>features</string>
-    <string>farmacie</string>
+    <string>popolazione_residente</string>
   </keywords>
-  <srs>EPSG:4326</srs>
+  <srs>EPSG:404000</srs>
   <nativeBoundingBox>
-    <minx>10.8984375</minx>
-    <maxx>11.063633918762207</maxx>
-    <miny>45.38178634643555</miny>
-    <maxy>45.49707794189453</maxy>
+    <minx>10.88071346282959</minx>
+    <maxx>11.116382598876953</maxx>
+    <miny>45.35098648071289</miny>
+    <maxy>45.5384407043457</maxy>
   </nativeBoundingBox>
   <latLonBoundingBox>
-    <minx>10.8984375</minx>
-    <maxx>11.063633918762207</maxx>
-    <miny>45.38178634643555</miny>
-    <maxy>45.49707794189453</maxy>
+    <minx>10.88071346282959</minx>
+    <maxx>11.116382598876953</maxx>
+    <miny>45.35098648071289</miny>
+    <maxy>45.5384407043457</maxy>
     <crs>EPSG:4326</crs>
   </latLonBoundingBox>
   <projectionPolicy>FORCE_DECLARED</projectionPolicy>
   <enabled>true</enabled>
-  <metadata>
-    <entry key="cachingEnabled">false</entry>
-  </metadata>
   <store class="dataStore">
     <id>DataStoreInfoImpl--4d8a503:17b6526dcb4:-7ffa</id>
   </store>
