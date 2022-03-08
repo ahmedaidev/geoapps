@@ -2,7 +2,7 @@
   <id>LayerInfoImpl-1785685:17f6978a73d:-7ff7</id>
   <enabled>true</enabled>
   <inMemoryCached>true</inMemoryCached>
-  <name>geoapp:punti_di_interesse_geom</name>
+  <name>geoapp-dev:punti_di_interesse_geom</name>
   <mimeFormats>
     <string>image/png</string>
     <string>image/jpeg</string>

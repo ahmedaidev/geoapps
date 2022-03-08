@@ -2,7 +2,7 @@
   <id>LayerInfoImpl-1785685:17f6978a73d:-7ff9</id>
   <enabled>true</enabled>
   <inMemoryCached>true</inMemoryCached>
-  <name>geoapp:scuole</name>
+  <name>geoapp-dev:scuole</name>
   <mimeFormats>
     <string>image/png</string>
     <string>image/jpeg</string>

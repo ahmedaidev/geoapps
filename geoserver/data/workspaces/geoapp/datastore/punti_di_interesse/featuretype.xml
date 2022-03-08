@@ -1,0 +1,41 @@
+<featureType>
+  <id>FeatureTypeInfoImpl-1fa83938:17f6a6d3297:-7ff1</id>
+  <name>punti_di_interesse</name>
+  <nativeName>punti_di_interesse</nativeName>
+  <namespace>
+    <id>NamespaceInfoImpl-1fa83938:17f6a6d3297:-7ff9</id>
+  </namespace>
+  <title>punti_di_interesse</title>
+  <keywords>
+    <string>features</string>
+    <string>punti_di_interesse</string>
+  </keywords>
+  <srs>EPSG:404000</srs>
+  <nativeBoundingBox>
+    <minx>1647961.96372103</minx>
+    <maxx>1663494.04336825</maxx>
+    <miny>5028516.56796388</miny>
+    <maxy>5035212.23444043</maxy>
+  </nativeBoundingBox>
+  <latLonBoundingBox>
+    <minx>1647961.96372103</minx>
+    <maxx>1663494.04336825</maxx>
+    <miny>5028516.56796388</miny>
+    <maxy>5035212.23444043</maxy>
+    <crs>EPSG:4326</crs>
+  </latLonBoundingBox>
+  <projectionPolicy>FORCE_DECLARED</projectionPolicy>
+  <enabled>true</enabled>
+  <store class="dataStore">
+    <id>DataStoreInfoImpl-1fa83938:17f6a6d3297:-7ff8</id>
+  </store>
+  <serviceConfiguration>false</serviceConfiguration>
+  <simpleConversionEnabled>false</simpleConversionEnabled>
+  <maxFeatures>0</maxFeatures>
+  <numDecimals>0</numDecimals>
+  <padWithZeros>false</padWithZeros>
+  <forcedDecimal>false</forcedDecimal>
+  <overridingServiceSRS>false</overridingServiceSRS>
+  <skipNumberMatched>false</skipNumberMatched>
+  <circularArcPresent>false</circularArcPresent>
+</featureType>

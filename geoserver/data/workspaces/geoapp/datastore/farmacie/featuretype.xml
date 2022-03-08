@@ -1,0 +1,41 @@
+<featureType>
+  <id>FeatureTypeInfoImpl-1fa83938:17f6a6d3297:-7ff7</id>
+  <name>farmacie</name>
+  <nativeName>farmacie</nativeName>
+  <namespace>
+    <id>NamespaceInfoImpl-1fa83938:17f6a6d3297:-7ff9</id>
+  </namespace>
+  <title>farmacie</title>
+  <keywords>
+    <string>features</string>
+    <string>farmacie</string>
+  </keywords>
+  <srs>EPSG:404000</srs>
+  <nativeBoundingBox>
+    <minx>10.8984375</minx>
+    <maxx>11.0636339187622</maxx>
+    <miny>45.3817863464355</miny>
+    <maxy>45.4970779418945</maxy>
+  </nativeBoundingBox>
+  <latLonBoundingBox>
+    <minx>10.8984375</minx>
+    <maxx>11.0636339187622</maxx>
+    <miny>45.3817863464355</miny>
+    <maxy>45.4970779418945</maxy>
+    <crs>EPSG:4326</crs>
+  </latLonBoundingBox>
+  <projectionPolicy>FORCE_DECLARED</projectionPolicy>
+  <enabled>true</enabled>
+  <store class="dataStore">
+    <id>DataStoreInfoImpl-1fa83938:17f6a6d3297:-7ff8</id>
+  </store>
+  <serviceConfiguration>false</serviceConfiguration>
+  <simpleConversionEnabled>false</simpleConversionEnabled>
+  <maxFeatures>0</maxFeatures>
+  <numDecimals>0</numDecimals>
+  <padWithZeros>false</padWithZeros>
+  <forcedDecimal>false</forcedDecimal>
+  <overridingServiceSRS>false</overridingServiceSRS>
+  <skipNumberMatched>false</skipNumberMatched>
+  <circularArcPresent>false</circularArcPresent>
+</featureType>

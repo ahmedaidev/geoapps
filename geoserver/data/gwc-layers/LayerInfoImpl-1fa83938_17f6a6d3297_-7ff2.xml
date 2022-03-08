@@ -1,8 +1,8 @@
 <GeoServerTileLayer>
-  <id>LayerInfoImpl-1785685:17f6978a73d:-7ffb</id>
+  <id>LayerInfoImpl-1fa83938:17f6a6d3297:-7ff2</id>
   <enabled>true</enabled>
   <inMemoryCached>true</inMemoryCached>
-  <name>geoapp-dev:popolazione_residente</name>
+  <name>geoapp:parchi_poligoni</name>
   <mimeFormats>
     <string>image/png</string>
     <string>image/jpeg</string>
@@ -26,7 +26,7 @@
       <key>STYLES</key>
       <defaultValue></defaultValue>
       <availableStyles class="sorted-set"/>
-      <defaultStyle>point</defaultStyle>
+      <defaultStyle>polygon</defaultStyle>
     </styleParameterFilter>
   </parameterFilters>
   <gutter>0</gutter>

@@ -1,16 +1,17 @@
 <layer>
-  <name>punti_di_interesse_geom</name>
-  <id>LayerInfoImpl-1785685:17f6978a73d:-7ff7</id>
+  <name>popolazione_residente</name>
+  <id>LayerInfoImpl-1785685:17f6978a73d:-7ffb</id>
   <type>VECTOR</type>
   <defaultStyle>
     <id>StyleInfoImpl--2785515b:17b65247bb1:-8000</id>
   </defaultStyle>
   <resource class="featureType">
-    <id>FeatureTypeInfoImpl-1785685:17f6978a73d:-7ff8</id>
+    <id>FeatureTypeInfoImpl-1785685:17f6978a73d:-7ffc</id>
   </resource>
   <attribution>
     <logoWidth>0</logoWidth>
     <logoHeight>0</logoHeight>
   </attribution>
-  <dateCreated>2022-03-08 12:27:18.73 UTC</dateCreated>
+  <dateCreated>2022-03-08 12:23:22.459 UTC</dateCreated>
+  <dateModified>2022-03-08 16:56:55.324 UTC</dateModified>
 </layer>

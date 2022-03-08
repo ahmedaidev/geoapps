@@ -1,8 +1,8 @@
 <GeoServerTileLayer>
-  <id>LayerInfoImpl-1785685:17f6978a73d:-7ffb</id>
+  <id>LayerInfoImpl-1fa83938:17f6a6d3297:-7fee</id>
   <enabled>true</enabled>
   <inMemoryCached>true</inMemoryCached>
-  <name>geoapp-dev:popolazione_residente</name>
+  <name>geoapp:popolazione_residente</name>
   <mimeFormats>
     <string>image/png</string>
     <string>image/jpeg</string>

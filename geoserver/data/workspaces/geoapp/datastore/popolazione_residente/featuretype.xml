@@ -1,0 +1,41 @@
+<featureType>
+  <id>FeatureTypeInfoImpl-1fa83938:17f6a6d3297:-7fef</id>
+  <name>popolazione_residente</name>
+  <nativeName>popolazione_residente</nativeName>
+  <namespace>
+    <id>NamespaceInfoImpl-1fa83938:17f6a6d3297:-7ff9</id>
+  </namespace>
+  <title>popolazione_residente</title>
+  <keywords>
+    <string>features</string>
+    <string>popolazione_residente</string>
+  </keywords>
+  <srs>EPSG:404000</srs>
+  <nativeBoundingBox>
+    <minx>10.8807134628296</minx>
+    <maxx>11.116382598877</maxx>
+    <miny>45.3509864807129</miny>
+    <maxy>45.5384407043457</maxy>
+  </nativeBoundingBox>
+  <latLonBoundingBox>
+    <minx>10.8807134628296</minx>
+    <maxx>11.116382598877</maxx>
+    <miny>45.3509864807129</miny>
+    <maxy>45.5384407043457</maxy>
+    <crs>EPSG:4326</crs>
+  </latLonBoundingBox>
+  <projectionPolicy>FORCE_DECLARED</projectionPolicy>
+  <enabled>true</enabled>
+  <store class="dataStore">
+    <id>DataStoreInfoImpl-1fa83938:17f6a6d3297:-7ff8</id>
+  </store>
+  <serviceConfiguration>false</serviceConfiguration>
+  <simpleConversionEnabled>false</simpleConversionEnabled>
+  <maxFeatures>0</maxFeatures>
+  <numDecimals>0</numDecimals>
+  <padWithZeros>false</padWithZeros>
+  <forcedDecimal>false</forcedDecimal>
+  <overridingServiceSRS>false</overridingServiceSRS>
+  <skipNumberMatched>false</skipNumberMatched>
+  <circularArcPresent>false</circularArcPresent>
+</featureType>

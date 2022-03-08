@@ -2,7 +2,7 @@
   <id>LayerInfoImpl--605f7ec6:17b6568a67c:-7ffa</id>
   <enabled>true</enabled>
   <inMemoryCached>true</inMemoryCached>
-  <name>geoapp:parchi_poligoni</name>
+  <name>geoapp-dev:parchi_poligoni</name>
   <mimeFormats>
     <string>image/png</string>
     <string>image/jpeg</string>

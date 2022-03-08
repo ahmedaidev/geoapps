@@ -1,0 +1,16 @@
+<layer>
+  <name>scuole</name>
+  <id>LayerInfoImpl-1fa83938:17f6a6d3297:-7ff4</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl--2785515b:17b65247bb1:-8000</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl-1fa83938:17f6a6d3297:-7ff5</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+  <dateCreated>2022-03-08 17:01:30.304 UTC</dateCreated>
+</layer>
