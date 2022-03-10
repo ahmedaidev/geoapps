@@ -84,7 +84,7 @@ jobs:
       - install-dependencies
       - add_ssh_keys:
           fingerprints:
-            - ''
+            - 'b5:f4:85:77:e1:ad:c2:fb:78:ef:49:cd:c8:60:41:e5'
       - run:
           name: Install ansible
           command: sudo apt install ansible
@@ -102,7 +102,7 @@ jobs:
       - install-dependencies
       - add_ssh_keys:
           fingerprints:
-            - ''
+            - 'b5:f4:85:77:e1:ad:c2:fb:78:ef:49:cd:c8:60:41:e5'
       - run:
           name: Install ansible
           command: sudo apt install ansible
