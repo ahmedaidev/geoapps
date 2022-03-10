@@ -16,6 +16,22 @@ commands:
           command: |
             sudo apt update
             sudo apt install tar gzip curl software-properties-common
+  build:
+    parameters:
+      image_name:
+        type: string
+      folder_path:
+        type: string
+    steps:
+      - run:
+          name: Login to Dockerhub
+          command: echo "$DOCKERHUB_PASSWORD" | docker login --username $DOCKERHUB_USERNAME --password-stdin
+      - run:
+          name: Build images
+          command: docker build -t "$CIRCLE_USERNAME/geoapp_<< parameters.image_name >>" << parameters.folder_path >>
+      - run:
+          name: Push images
+          command: docker push "$CIRCLE_USERNAME/geoapp_<< parameters.image_name >>"
   destroy-environment:
     parameters:
       workflow_id:
@@ -27,34 +43,55 @@ commands:
           command: echo "Destroying environment..."
 
 jobs:
-  build:
+  build-farmacie:
     machine: true
     steps:
       - checkout
-      - run:
-          name: Login to Dockerhub
-          command: |
-            echo "$DOCKERHUB_PASSWORD" | docker login --username $DOCKERHUB_USERNAME --password-stdin
-      - run:
-          name: Build images
-          command: |
-            docker build -t "$CIRCLE_USERNAME/geoapp_farmacie" ./app_farmacie
-            docker build -t "$CIRCLE_USERNAME/geoapp_parchi" ./app_parchi
-            docker build -t "$CIRCLE_USERNAME/geoapp_popolazione" ./app_popolazione
-            docker build -t "$CIRCLE_USERNAME/geoapp_punti_interesse" ./app_punti_interesse
-            docker build -t "$CIRCLE_USERNAME/geoapp_scuole" ./app_scuole
-            docker build -t "$CIRCLE_USERNAME/geoapp_geoserver" ./geoserver
-            docker build -t "$CIRCLE_USERNAME/geoapp_nginx" ./infra/nginx
-      - run:
-          name: Push images
-          command: |
-            docker push "$CIRCLE_USERNAME/geoapp_farmacie"
-            docker push "$CIRCLE_USERNAME/geoapp_parchi"
-            docker push "$CIRCLE_USERNAME/geoapp_popolazione"
-            docker push "$CIRCLE_USERNAME/geoapp_punti_interesse"
-            docker push "$CIRCLE_USERNAME/geoapp_scuole"
-            docker push "$CIRCLE_USERNAME/geoapp_geoserver"
-            docker push "$CIRCLE_USERNAME/geoapp_nginx"
+      - build:
+          image_name: farmacie
+          folder_path: ./app_farmacie
+  build-parchi:
+    machine: true
+    steps:
+      - checkout
+      - build:
+          image_name: parchi
+          folder_path: ./app_parchi
+  build-popolazione:
+    machine: true
+    steps:
+      - checkout
+      - build:
+          image_name: popolazione
+          folder_path: ./app_popolazione
+  build-punti-interesse:
+    machine: true
+    steps:
+      - checkout
+      - build:
+          image_name: punti_interesse
+          folder_path: ./app_punti_interesse
+  build-scuole:
+    machine: true
+    steps:
+      - checkout
+      - build:
+          image_name: scuole
+          folder_path: ./app_scuole
+  build-geoserver:
+    machine: true
+    steps:
+      - checkout
+      - build:
+          image_name: geoserver
+          folder_path: ./geoserver
+  build-nginx:
+    machine: true
+    steps:
+      - checkout
+      - build:
+          image_name: nginx
+          folder_path: ./infra/nginx
 
   # provision:
   #   docker:
@@ -121,10 +158,22 @@ jobs:
 workflows:
   default:
     jobs:
-      - build
+      - build-farmacie
+      - build-parchi
+      - build-popolazione
+      - build-punti-interesse
+      - build-scuole
+      - build-geoserver
+      - build-nginx
       - configure:
           requires:
-            - build
+            - build-farmacie
+            - build-parchi
+            - build-popolazione
+            - build-punti-interesse
+            - build-scuole
+            - build-geoserver
+            - build-nginx
       - deploy:
           requires:
             - configure
