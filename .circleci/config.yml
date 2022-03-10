@@ -122,3 +122,9 @@ workflows:
   default:
     jobs:
       - build
+      - configure:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - configure
