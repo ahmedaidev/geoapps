@@ -1,0 +1,124 @@
+version: 2.1
+
+commands:
+  install-dependencies:
+    steps:
+      - run:
+          name: Add third-party repositories
+          command: |
+            # terraform
+            curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+            sudo apt-add-repository -y "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+            # ansible
+            sudo add-apt-repository -y --update ppa:ansible/ansible
+      - run:
+          name: Install necessary dependencies
+          command: |
+            sudo apt update
+            sudo apt install tar gzip curl software-properties-common
+  destroy-environment:
+    parameters:
+      workflow_id:
+        type: string
+    steps:
+      - run:
+          name: Destroy environment
+          when: on_fail
+          command: echo "Destroying environment..."
+
+jobs:
+  build:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Login to Dockerhub
+          command: |
+            echo "$DOCKERHUB_PASSWORD" | docker login --username $DOCKERHUB_USERNAME --password-stdin
+      - run:
+          name: Build images
+          command: |
+            docker build -t "$CIRCLE_USERNAME/geoapp_farmacie" ./app_farmacie
+            docker build -t "$CIRCLE_USERNAME/geoapp_parchi" ./app_parchi
+            docker build -t "$CIRCLE_USERNAME/geoapp_popolazione" ./app_popolazione
+            docker build -t "$CIRCLE_USERNAME/geoapp_punti_interesse" ./app_punti_interesse
+            docker build -t "$CIRCLE_USERNAME/geoapp_scuole" ./app_scuole
+            docker build -t "$CIRCLE_USERNAME/geoapp_geoserver" ./geoserver
+            docker build -t "$CIRCLE_USERNAME/geoapp_nginx" ./infra/nginx
+      - run:
+          name: Push images
+          command: |
+            docker push "$CIRCLE_USERNAME/geoapp_farmacie"
+            docker push "$CIRCLE_USERNAME/geoapp_parchi"
+            docker push "$CIRCLE_USERNAME/geoapp_popolazione"
+            docker push "$CIRCLE_USERNAME/geoapp_punti_interesse"
+            docker push "$CIRCLE_USERNAME/geoapp_scuole"
+            docker push "$CIRCLE_USERNAME/geoapp_geoserver"
+            docker push "$CIRCLE_USERNAME/geoapp_nginx"
+
+  # provision:
+  #   docker:
+  #     - image: cimg/base:2021.04
+  #   steps:
+  #     - checkout
+  #     - install-dependencies
+  #     - run:
+  #         name: Install terraform
+  #         command: sudo apt install terraform
+  #     - run:
+  #         name: Provision infrastructure
+  #         command: |
+  #           cd infra/terraform/
+  #           CURRENT="blue"
+  #           if [[ $CURRENT =~ blue || $CURRENT =~ green ]]; then
+  #             terraform apply -auto-approve -var "workflow_id=${CIRCLE_WORKFLOW_ID:0:7}" -var enable_green_env=true
+  #           else
+  #             terraform apply -auto-approve -var "workflow_id=${CIRCLE_WORKFLOW_ID:0:7}"
+  #           fi
+
+  configure:
+    docker:
+      - image: cimg/base:2021.04
+    steps:
+      - checkout
+      - install-dependencies
+      - add_ssh_keys:
+          fingerprints:
+            - ''
+      - run:
+          name: Install ansible
+          command: sudo apt install ansible
+      - run:
+          name: Configure infrastructure
+          command: |
+            cd infra/ansible/
+            ansible-playbook configure.yaml
+
+  deploy:
+    docker:
+      - image: cimg/base:2021.04
+    steps:
+      - checkout
+      - install-dependencies
+      - add_ssh_keys:
+          fingerprints:
+            - ''
+      - run:
+          name: Install ansible
+          command: sudo apt install ansible
+      - run:
+          name: Deploy apps
+          command: |
+            cd infra/ansible/
+            ansible-playbook deploy.yaml
+
+  cleanup:
+    docker:
+      - image: cimg/base:2021.04
+    steps:
+      - run: echo "Cleaning up infrastructure"
+
+workflows:
+  default:
+    jobs:
+      - build

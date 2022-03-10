@@ -5,7 +5,7 @@
   tasks:
     - name: Fetch nodejs 14 binaries
       shell: curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-    - name: Install pip, node, docker, docker-compose
+    - name: Install pip, node, docker
       apt:
         pkg:
           - python3-pip
@@ -24,7 +24,7 @@
           - docker
           - docker-compose
 
-- name: Add ubuntu to docker group
+- name: Add ubuntu user to docker group
   hosts: default
   become: yes
   tasks:
@@ -35,11 +35,3 @@
         append: yes
     - name: Reconnect to server session
       meta: reset_connection
-
-- name: Clone the git repository
-  hosts: default
-  tasks:
-    - name: Clone git repository
-      git:
-        repo: https://github.com/ahmedaidev/geoapp-latest.git
-        dest: /home/ubuntu/

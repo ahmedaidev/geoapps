@@ -1,0 +1,12 @@
+---
+- name: Deploy applications
+  hosts: default
+  tasks:
+    - name: Copy docker-compose file to server
+      copy:
+        src: ./docker-compose.yml
+        dest: /home/ubuntu/
+    - name: Execute docker-compose file
+      shell: |
+        cd /home/ubuntu/
+        docker-compose up -d
