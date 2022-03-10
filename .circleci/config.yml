@@ -44,74 +44,74 @@ commands:
 
 jobs:
   build-farmacie:
-    machine: true
+    docker:
+      - image: cimg/base:2021.04
     steps:
       - checkout
       - build:
           image_name: farmacie
           folder_path: ./app_farmacie
   build-parchi:
-    machine: true
+    docker:
+      - image: cimg/base:2021.04
     steps:
       - checkout
       - build:
           image_name: parchi
           folder_path: ./app_parchi
   build-popolazione:
-    machine: true
+    docker:
+      - image: cimg/base:2021.04
     steps:
       - checkout
       - build:
           image_name: popolazione
           folder_path: ./app_popolazione
   build-punti-interesse:
-    machine: true
+    docker:
+      - image: cimg/base:2021.04
     steps:
       - checkout
       - build:
           image_name: punti_interesse
           folder_path: ./app_punti_interesse
   build-scuole:
-    machine: true
+    docker:
+      - image: cimg/base:2021.04
     steps:
       - checkout
       - build:
           image_name: scuole
           folder_path: ./app_scuole
   build-geoserver:
-    machine: true
+    docker:
+      - image: cimg/base:2021.04
     steps:
       - checkout
       - build:
           image_name: geoserver
           folder_path: ./geoserver
   build-nginx:
-    machine: true
+    docker:
+      - image: cimg/base:2021.04
     steps:
       - checkout
       - build:
           image_name: nginx
           folder_path: ./infra/nginx
 
-  # provision:
-  #   docker:
-  #     - image: cimg/base:2021.04
-  #   steps:
-  #     - checkout
-  #     - install-dependencies
-  #     - run:
-  #         name: Install terraform
-  #         command: sudo apt install terraform
-  #     - run:
-  #         name: Provision infrastructure
-  #         command: |
-  #           cd infra/terraform/
-  #           CURRENT="blue"
-  #           if [[ $CURRENT =~ blue || $CURRENT =~ green ]]; then
-  #             terraform apply -auto-approve -var "workflow_id=${CIRCLE_WORKFLOW_ID:0:7}" -var enable_green_env=true
-  #           else
-  #             terraform apply -auto-approve -var "workflow_id=${CIRCLE_WORKFLOW_ID:0:7}"
-  #           fi
+  provision:
+    docker:
+      - image: cimg/base:2021.04
+    steps:
+      - checkout
+      - install-dependencies
+      - run:
+          name: Install terraform
+          command: sudo apt install terraform
+      - run:
+          name: Provision infrastructure
+          command: echo "Provisioning..."
 
   configure:
     docker:
@@ -149,11 +149,25 @@ jobs:
             cd infra/ansible/
             ansible-playbook deploy.yaml
 
+  smoke-test:
+    docker:
+      - image: cimg/base:2021.04
+    steps:
+      - run:
+          name: Request domain
+          command: |
+            URL="http://devopslabs.xyz"
+            if curl -s $URL | grep "Farmacie a Verona"; then
+              exit 0
+            else
+              exit 1
+            fi
+
   cleanup:
     docker:
       - image: cimg/base:2021.04
     steps:
-      - run: echo "Cleaning up infrastructure"
+      - run: echo "Cleaning..."
 
 workflows:
   default:
@@ -177,3 +191,9 @@ workflows:
       - deploy:
           requires:
             - configure
+      - smoke-test:
+          requires:
+            - deploy
+      - cleanup:
+          requires:
+            - smoke-test

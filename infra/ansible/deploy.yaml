@@ -6,7 +6,6 @@
       copy:
         src: ./docker-compose.yml
         dest: /home/ubuntu/
-    - name: Execute docker-compose file
-      shell: |
-        cd /home/ubuntu/
-        docker-compose up -d
+    - name: Start containers from compose
+      community.docker.docker_compose:
+        project_src: /home/ubuntu/
