@@ -41,7 +41,8 @@ commands:
           command: |
             NOW=$(curl "https://api.thisdb.com/v1/$THISDB_BUCKET/now" -H "X-Api-Key: $THISDB_API_KEY")
             NEXT=$(curl "https://api.thisdb.com/v1/$THISDB_BUCKET/next" -H "X-Api-Key: $THISDB_API_KEY")
-            terraform -chdir=./infra/terraform apply -auto-approve -var workflow_id="${CIRCLE_WORKFLOW_ID:0:7}" -var traffic_distribution="$NOW" -var "enable_${NEXT}_env=false"
+            cd infra/terraform
+            terraform apply -auto-approve -var workflow_id="${CIRCLE_WORKFLOW_ID:0:7}" -var traffic_distribution="$NOW" -var "enable_${NEXT}_env=false"
 
 jobs:
   build-farmacie:
@@ -111,25 +112,28 @@ jobs:
           name: Provision infrastructure
           command: |
             STATE=$(curl "https://api.thisdb.com/v1/$THISDB_BUCKET" -H "X-Api-Key: $THISDB_API_KEY")
-            terraform -chdir=./infra/terraform init
-            if [[ $STATE =~ now | $STATE =~ next ]]; then
+            cd infra/terraform
+            terraform init
+            if [[ $STATE =~ now ]]; then
               NOW=$(curl "https://api.thisdb.com/v1/$THISDB_BUCKET/now" -H "X-Api-Key: $THISDB_API_KEY")
-              terraform -chdir=./infra/terraform apply -auto-approve -var workflow_id="${CIRCLE_WORKFLOW_ID:0:7}" -var traffic_distribution="$NOW"
+              terraform apply -auto-approve -var workflow_id="${CIRCLE_WORKFLOW_ID:0:7}" -var traffic_distribution="$NOW"
             else
-              curl "https://api.thisdb.com/v1/$THISDB_BUCKET/now" -H "X-Api-Key: $THISDB_API_KEY" -d "blue"
-              curl "https://api.thisdb.com/v1/$THISDB_BUCKET/next" -H "X-Api-Key: $THISDB_API_KEY" -d "green"
+              terraform apply -auto-approve -var workflow_id="${CIRCLE_WORKFLOW_ID:0:7}" -var traffic_distribution="blue" -var enable_green_env=false
+              curl "https://api.thisdb.com/v1/$THISDB_BUCKET/now" -H "X-Api-Key: $THISDB_API_KEY" -d "green"
+              curl "https://api.thisdb.com/v1/$THISDB_BUCKET/next" -H "X-Api-Key: $THISDB_API_KEY" -d "blue"
             fi
       - persist_to_workspace:
           root: ~/project
           paths:
             - infra/terraform
-      - rollback
 
   configure:
     docker:
       - image: cimg/python:3.10.2
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/project/infra/terraform
       - add_ssh_keys:
           fingerprints:
             - 'b5:f4:85:77:e1:ad:c2:fb:78:ef:49:cd:c8:60:41:e5'
@@ -150,6 +154,8 @@ jobs:
       - image: cimg/python:3.10.2
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/project/infra/terraform
       - add_ssh_keys:
           fingerprints:
             - 'b5:f4:85:77:e1:ad:c2:fb:78:ef:49:cd:c8:60:41:e5'
@@ -177,7 +183,8 @@ jobs:
           name: Promote infrastructure
           command: |
             NEXT=$(curl "https://api.thisdb.com/v1/$THISDB_BUCKET/next" -H "X-Api-Key: $THISDB_API_KEY")
-            terraform -chdir=./infra/terraform apply -auto-approve -var workflow_id="${CIRCLE_WORKFLOW_ID:0:7}" -var traffic_distribution="$NEXT"
+            cd infra/terraform
+            terraform apply -auto-approve -var workflow_id="${CIRCLE_WORKFLOW_ID:0:7}" -var traffic_distribution="$NEXT"
       - rollback
 
   smoke-test:
@@ -210,7 +217,8 @@ jobs:
           command: |
             NOW=$(curl "https://api.thisdb.com/v1/$THISDB_BUCKET/now" -H "X-Api-Key: $THISDB_API_KEY")
             NEXT=$(curl "https://api.thisdb.com/v1/$THISDB_BUCKET/next" -H "X-Api-Key: $THISDB_API_KEY")
-            terraform -chdir=./infra/terraform apply -auto-approve -var workflow_id="${CIRCLE_WORKFLOW_ID:0:7}" -var traffic_distribution="$NEXT" -var "enable_${NOW}_env=false"
+            cd infra/terraform
+            terraform apply -auto-approve -var workflow_id="${CIRCLE_WORKFLOW_ID:0:7}" -var traffic_distribution="$NEXT" -var "enable_${NOW}_env=false"
             curl "https://api.thisdb.com/v1/$THISDB_BUCKET/now" -H "X-Api-Key: $THISDB_API_KEY" -d "$NEXT"
             curl "https://api.thisdb.com/v1/$THISDB_BUCKET/next" -H "X-Api-Key: $THISDB_API_KEY" -d "$NOW"
       - rollback
