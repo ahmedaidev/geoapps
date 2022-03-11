@@ -1,3 +1,12 @@
+terraform {
+  required_version = ">= 0.12"
+  backend "s3" {
+    bucket = "geoapp-bucket"
+    key    = "geoapp/state.tfstate"
+    region = var.region
+  }
+}
+
 provider "aws" {
   region = var.region
 }
@@ -17,7 +26,7 @@ module "vpc" {
   private_subnets = slice(var.private_subnet_cidr_blocks, 0, var.private_subnet_count)
   public_subnets  = slice(var.public_subnet_cidr_blocks, 0, var.public_subnet_count)
 
-  enable_nat_gateway = false
+  enable_nat_gateway   = false
   enable_dns_hostnames = true
 }
 

@@ -12,7 +12,7 @@ resource "aws_instance" "blue" {
   }
   tags = {
     Name : "blue_${var.workflow_id}"
-    Env: "blue"
+    Env : "blue"
   }
 }
 
