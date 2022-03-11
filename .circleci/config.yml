@@ -198,13 +198,15 @@ jobs:
     docker:
       - image: cimg/base:2021.04
     steps:
+      - checkout
       - restore_cache:
           keys:
             - tf-modules
+      - install-dependencies
       - run:
           name: Checking website
           command: |
-            URL="http://devopslabs.xyz"
+            URL="http://farmacie.devopslabs.xyz"
             if curl -s $URL | grep "Verona"; then
               exit 0
             else
