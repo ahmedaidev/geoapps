@@ -146,7 +146,8 @@ jobs:
           name: Configure infrastructure
           command: |
             NEXT=$(curl "https://api.thisdb.com/v1/$THISDB_BUCKET/next" -H "X-Api-Key: $THISDB_API_KEY")
-            ansible-playbook ./infra/ansible/configure.yaml -e "hosts=tag_Env_$NEXT"
+            cd infra/ansible
+            ansible-playbook configure.yaml -e "hosts=tag_Env_${NEXT}"
       - rollback
 
   deploy:
@@ -168,7 +169,8 @@ jobs:
           name: Deploy apps
           command: |
             NEXT=$(curl "https://api.thisdb.com/v1/$THISDB_BUCKET/next" -H "X-Api-Key: $THISDB_API_KEY")
-            ansible-playbook ./infra/ansible/deploy.yaml -e "hosts=tag_Env_$NEXT"
+            cd infra/ansible
+            ansible-playbook deploy.yaml -e "hosts=tag_Env_${NEXT}"
       - rollback
 
   promote:
