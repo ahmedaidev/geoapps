@@ -1,6 +1,6 @@
 ---
 - name: Install packages
-  hosts: default
+  hosts: '{{ hosts }}'
   become: yes
   tasks:
     - name: Fetch nodejs 14 binaries
@@ -25,7 +25,7 @@
           - docker-compose
 
 - name: Add ubuntu user to docker group
-  hosts: default
+  hosts: '{{ hosts }}'
   become: yes
   tasks:
     - name: Add ubuntu to docker group

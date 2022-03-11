@@ -1,6 +1,6 @@
 ---
 - name: Deploy applications
-  hosts: default
+  hosts: '{{ hosts }}'
   tasks:
     - name: Copy docker-compose file to server
       copy:
