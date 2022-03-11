@@ -3,12 +3,12 @@ terraform {
   backend "s3" {
     bucket = "geoapp-bucket"
     key    = "geoapp/state.tfstate"
-    region = var.region
+    region = "eu-central-1"
   }
 }
 
 provider "aws" {
-  region = var.region
+  region = "eu-central-1"
 }
 
 data "aws_availability_zones" "available" {
