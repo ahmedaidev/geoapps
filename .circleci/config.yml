@@ -103,7 +103,12 @@ jobs:
           command: |
             CURRENT_DEPLOYMENT=$(curl "https://api.thisdb.com/v1/$THISDB_BUCKET/current-deployment" -H "X-Api-Key: $THISDB_API_KEY")
             cd infra/terraform
+            terraform init
             terraform apply -auto-approve -var workflow_id="${CIRCLE_WORKFLOW_ID:0:7}" -var traffic_distribution="$CURRENT_DEPLOYMENT"
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - ./infra/terraform
 
   configure:
     docker:
@@ -158,6 +163,8 @@ jobs:
       - image: cimg/base:2021.04
     steps:
       - checkout
+      - attach_workspace:
+          at: ./infra/terraform
       - install-dependencies
       - run:
           name: Promote infrastructure
@@ -174,6 +181,8 @@ jobs:
     docker:
       - image: cimg/base:2021.04
     steps:
+      - attach_workspace:
+          at: ./infra/terraform
       - run:
           name: Checking website
           command: |
@@ -200,6 +209,8 @@ jobs:
       - image: cimg/base:2021.04
     steps:
       - checkout
+      - attach_workspace:
+          at: ./infra/terraform
       - install-dependencies
       - run:
           name: Cleanup infrastructure
