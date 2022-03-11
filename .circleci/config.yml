@@ -6,16 +6,14 @@ commands:
       - run:
           name: Add third-party repositories
           command: |
-            # terraform
             curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
             sudo apt-add-repository -y "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-            # ansible
             sudo add-apt-repository -y --update ppa:ansible/ansible
       - run:
           name: Install necessary dependencies
           command: |
             sudo apt update
-            sudo apt install tar gzip curl software-properties-common
+            sudo apt install tar gzip curl software-properties-common terraform ansible
   build:
     parameters:
       image_name:
@@ -32,15 +30,6 @@ commands:
       - run:
           name: Push images
           command: docker push "$CIRCLE_USERNAME/geoapp_<< parameters.image_name >>"
-  destroy-environment:
-    parameters:
-      workflow_id:
-        type: string
-    steps:
-      - run:
-          name: Destroy environment
-          when: on_fail
-          command: echo "Destroying environment..."
 
 jobs:
   build-farmacie:
@@ -107,54 +96,83 @@ jobs:
       - checkout
       - install-dependencies
       - run:
-          name: Install terraform
-          command: sudo apt install terraform
-      - run:
           name: Provision infrastructure
-          command: echo "Provisioning..."
+          command: |
+            CURRENT_DEPLOYMENT=$(curl "https://api.thisdb.com/v1/$THISDB_BUCKET/current-deployment" -H "X-Api-Key: $THISDB_API_KEY")
+            cd infra/terraform
+            terraform apply -auto-approve -var workflow_id="${CIRCLE_WORKFLOW_ID:0:7}" -var traffic_distribution="$CURRENT_DEPLOYMENT"
 
   configure:
     docker:
-      - image: cimg/base:2021.04
+      - image: cimg/python:3.10.2
     steps:
       - checkout
-      - install-dependencies
       - add_ssh_keys:
           fingerprints:
             - 'b5:f4:85:77:e1:ad:c2:fb:78:ef:49:cd:c8:60:41:e5'
+      - install-dependencies
       - run:
-          name: Install ansible
-          command: sudo apt install ansible
+          name: Install ansible aws_ec2 plugin dependencies
+          command: |
+            pip install boto3 botocore
       - run:
           name: Configure infrastructure
           command: |
-            cd infra/ansible/
-            ansible-playbook configure.yaml
+            CURRENT_DEPLOYMENT=$(curl "https://api.thisdb.com/v1/$THISDB_BUCKET/current-deployment" -H "X-Api-Key: $THISDB_API_KEY")
+            cd infra/ansible
+            if [[ $CURRENT_DEPLOYMENT =~ blue ]]; then
+              ansible-playbook configure.yaml -e "hosts=tag_Env_green"
+            else
+              ansible-playbook configure.yaml -e "hosts=tag_Env_blue"
+            fi
 
   deploy:
+    docker:
+      - image: cimg/python:3.10.2
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - 'b5:f4:85:77:e1:ad:c2:fb:78:ef:49:cd:c8:60:41:e5'
+      - install-dependencies
+      - run:
+          name: Install ansible aws_ec2 plugin dependencies
+          command: |
+            pip install boto3 botocore
+      - run:
+          name: Deploy apps
+          command: |
+            CURRENT_DEPLOYMENT=$(curl "https://api.thisdb.com/v1/$THISDB_BUCKET/current-deployment" -H "X-Api-Key: $THISDB_API_KEY")
+            cd infra/ansible
+            if [[ $CURRENT_DEPLOYMENT =~ blue ]]; then
+              ansible-playbook deploy.yaml -e "hosts=tag_Env_green"
+            else
+              ansible-playbook deploy.yaml -e "hosts=tag_Env_blue"
+            fi
+
+  promote:
     docker:
       - image: cimg/base:2021.04
     steps:
       - checkout
       - install-dependencies
-      - add_ssh_keys:
-          fingerprints:
-            - 'b5:f4:85:77:e1:ad:c2:fb:78:ef:49:cd:c8:60:41:e5'
       - run:
-          name: Install ansible
-          command: sudo apt install ansible
-      - run:
-          name: Deploy apps
+          name: Promote infrastructure
           command: |
-            cd infra/ansible/
-            ansible-playbook deploy.yaml
+            CURRENT_DEPLOYMENT=$(curl "https://api.thisdb.com/v1/$THISDB_BUCKET/current-deployment" -H "X-Api-Key: $THISDB_API_KEY")
+            cd infra/terraform
+            if [[ $CURRENT_DEPLOYMENT =~ blue ]]; then
+              terraform apply -auto-approve -var workflow_id="${CIRCLE_WORKFLOW_ID:0:7}" -var traffic_distribution=green
+            else
+              terraform apply -auto-approve -var workflow_id="${CIRCLE_WORKFLOW_ID:0:7}" -var traffic_distribution=blue
+            fi
 
   smoke-test:
     docker:
       - image: cimg/base:2021.04
     steps:
       - run:
-          name: Request domain
+          name: Checking website
           command: |
             URL="http://devopslabs.xyz"
             if curl -s $URL | grep "Farmacie a Verona"; then
@@ -162,12 +180,40 @@ jobs:
             else
               exit 1
             fi
+      - run:
+          name: Rollback incase of failure
+          when: on_fail
+          command: |
+            CURRENT_DEPLOYMENT=$(curl "https://api.thisdb.com/v1/$THISDB_BUCKET/current-deployment" -H "X-Api-Key: $THISDB_API_KEY")
+            cd infra/terraform
+            if [[ $CURRENT_DEPLOYMENT =~ blue ]]; then
+              terraform apply -auto-approve -var workflow_id="${CIRCLE_WORKFLOW_ID:0:7}" -var traffic_distribution=blue
+            else
+              terraform apply -auto-approve -var workflow_id="${CIRCLE_WORKFLOW_ID:0:7}" -var traffic_distribution=green
+            fi
 
   cleanup:
     docker:
       - image: cimg/base:2021.04
     steps:
-      - run: echo "Cleaning..."
+      - checkout
+      - install-dependencies
+      - run:
+          name: Cleanup infrastructure
+          command: |
+            CURRENT_DEPLOYMENT=$(curl "https://api.thisdb.com/v1/$THISDB_BUCKET/current-deployment" -H "X-Api-Key: $THISDB_API_KEY")
+            cd infra/terraform
+            if [[ $CURRENT_DEPLOYMENT =~ blue ]]; then
+              terraform apply -auto-approve -var workflow_id="${CIRCLE_WORKFLOW_ID:0:7}" -var traffic_distribution=green -var enable_blue_env=false
+              curl "https://api.thisdb.com/v1/$THISDB_BUCKET/current-deployment" \
+                -H "X-Api-Key: $THISDB_API_KEY" \
+                -d "green"
+            else
+              terraform apply -auto-approve -var workflow_id="${CIRCLE_WORKFLOW_ID:0:7}" -var traffic_distribution=blue -var enable_green_env=false
+              curl "https://api.thisdb.com/v1/$THISDB_BUCKET/current-deployment" \
+                -H "X-Api-Key: $THISDB_API_KEY" \
+                -d "blue"
+            fi
 
 workflows:
   default:
@@ -179,7 +225,7 @@ workflows:
       - build-scuole
       - build-geoserver
       - build-nginx
-      - configure:
+      - provision:
           requires:
             - build-farmacie
             - build-parchi
@@ -188,12 +234,18 @@ workflows:
             - build-scuole
             - build-geoserver
             - build-nginx
+      - configure:
+          requires:
+            - provision
       - deploy:
           requires:
             - configure
-      - smoke-test:
+      - promote:
           requires:
             - deploy
+      - smoke-test:
+          requires:
+            - promote
       - cleanup:
           requires:
             - smoke-test
