@@ -34,9 +34,6 @@ commands:
           name: Push images
           command: docker push "$CIRCLE_USERNAME/geoapp_<< parameters.image_name >>"
   rollback:
-    parameters:
-      workflow_id:
-        type: string
     steps:
       - run:
           name: Rollback environment
@@ -44,7 +41,7 @@ commands:
           command: |
             NOW=$(curl "https://api.thisdb.com/v1/$THISDB_BUCKET/now" -H "X-Api-Key: $THISDB_API_KEY")
             NEXT=$(curl "https://api.thisdb.com/v1/$THISDB_BUCKET/next" -H "X-Api-Key: $THISDB_API_KEY")
-            terraform -chdir=./infra/terraform apply -auto-approve -var workflow_id="<< paramters.workflow_id >>" -var traffic_distribution="$NOW" -var "enable_${NEXT}_env=false"
+            terraform -chdir=./infra/terraform apply -auto-approve -var workflow_id="${CIRCLE_WORKFLOW_ID:0:7}" -var traffic_distribution="$NOW" -var "enable_${NEXT}_env=false"
 
 jobs:
   build-farmacie:
@@ -126,8 +123,7 @@ jobs:
           root: ~/project
           paths:
             - infra/terraform
-      - rollback:
-          workflow_id: '${CIRCLE_WORKFLOW_ID:0:7}'
+      - rollback
 
   configure:
     docker:
@@ -147,8 +143,7 @@ jobs:
           command: |
             NEXT=$(curl "https://api.thisdb.com/v1/$THISDB_BUCKET/next" -H "X-Api-Key: $THISDB_API_KEY")
             ansible-playbook ./infra/ansible/configure.yaml -e "hosts=tag_Env_$NEXT"
-      - rollback:
-          workflow_id: '${CIRCLE_WORKFLOW_ID:0:7}'
+      - rollback
 
   deploy:
     docker:
@@ -168,8 +163,7 @@ jobs:
           command: |
             NEXT=$(curl "https://api.thisdb.com/v1/$THISDB_BUCKET/next" -H "X-Api-Key: $THISDB_API_KEY")
             ansible-playbook ./infra/ansible/deploy.yaml -e "hosts=tag_Env_$NEXT"
-      - rollback:
-          workflow_id: '${CIRCLE_WORKFLOW_ID:0:7}'
+      - rollback
 
   promote:
     docker:
@@ -184,8 +178,7 @@ jobs:
           command: |
             NEXT=$(curl "https://api.thisdb.com/v1/$THISDB_BUCKET/next" -H "X-Api-Key: $THISDB_API_KEY")
             terraform -chdir=./infra/terraform apply -auto-approve -var workflow_id="${CIRCLE_WORKFLOW_ID:0:7}" -var traffic_distribution="$NEXT"
-      - rollback:
-          workflow_id: '${CIRCLE_WORKFLOW_ID:0:7}'
+      - rollback
 
   smoke-test:
     docker:
@@ -202,8 +195,7 @@ jobs:
             else
               exit 1
             fi
-      - rollback:
-          workflow_id: '${CIRCLE_WORKFLOW_ID:0:7}'
+      - rollback
 
   cleanup:
     docker:
@@ -221,8 +213,7 @@ jobs:
             terraform -chdir=./infra/terraform apply -auto-approve -var workflow_id="${CIRCLE_WORKFLOW_ID:0:7}" -var traffic_distribution="$NEXT" -var "enable_${NOW}_env=false"
             curl "https://api.thisdb.com/v1/$THISDB_BUCKET/now" -H "X-Api-Key: $THISDB_API_KEY" -d "$NEXT"
             curl "https://api.thisdb.com/v1/$THISDB_BUCKET/next" -H "X-Api-Key: $THISDB_API_KEY" -d "$NOW"
-      - rollback:
-          workflow_id: '${CIRCLE_WORKFLOW_ID:0:7}'
+      - rollback
 
 workflows:
   default:
