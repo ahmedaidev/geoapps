@@ -1,3 +1,13 @@
+variable "traffic_distribution" {
+  description = "Levels of traffic distribution"
+  type        = string
+}
+
+variable "workflow_id" {
+  description = "Pipeline workflow id"
+  type    = string
+}
+
 variable "vpc_cidr_block" {
   description = "CIDR block for VPC"
   type        = string
@@ -83,12 +93,3 @@ locals {
   }
 }
 
-variable "traffic_distribution" {
-  description = "Levels of traffic distribution"
-  type        = string
-}
-
-variable "workflow_id" {
-  type    = string
-  default = "0"
-}

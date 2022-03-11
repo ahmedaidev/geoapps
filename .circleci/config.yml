@@ -126,7 +126,7 @@ jobs:
             fi
       - save_cache:
           paths:
-            - ~/project/infra/terraform # location depends on npm version
+            - ~/project/infra/terraform
           key: tf-modules
 
   configure:
@@ -237,26 +237,26 @@ jobs:
 workflows:
   default:
     jobs:
-      # - build-farmacie
-      # - build-parchi
-      # - build-popolazione
-      # - build-punti-interesse
-      # - build-scuole
-      # - build-geoserver
-      # - build-nginx
+      - build-farmacie
+      - build-parchi
+      - build-popolazione
+      - build-punti-interesse
+      - build-scuole
+      - build-geoserver
+      - build-nginx
       - provision:
           filters:
             branches:
               only:
                 - main
-          # requires:
-          #   - build-farmacie
-          #   - build-parchi
-          #   - build-popolazione
-          #   - build-punti-interesse
-          #   - build-scuole
-          #   - build-geoserver
-          #   - build-nginx
+          requires:
+            - build-farmacie
+            - build-parchi
+            - build-popolazione
+            - build-punti-interesse
+            - build-scuole
+            - build-geoserver
+            - build-nginx
       - configure:
           requires:
             - provision

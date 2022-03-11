@@ -113,7 +113,7 @@ data "aws_ami" "latest_ubuntu_image" {
 }
 
 resource "aws_lb" "alb" {
-  name               = "geoapp-alb"
+  name               = "geoapp-${var.workflow_id}-alb"
   internal           = false
   load_balancer_type = "application"
   subnets            = module.vpc.public_subnets
