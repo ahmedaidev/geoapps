@@ -2,97 +2,66 @@
 
 [![CircleCI](https://circleci.com/gh/ahmedaidev/geoapp-latest/tree/main.svg?style=svg)](https://circleci.com/gh/ahmedaidev/geoapp-latest/tree/main)
 
-# Il progetto
+![pipeline](https://raw.githubusercontent.com/ahmedaidev/geoapp-latest/main/pipeline.jpg)
 
-La seguente applicazione mobile nasce dall'esigenza di trovare in tempo reale ed istantaneamente più vicino alla nostra posizione attuale. L'obiettivo è quello di fornire uno strumento facile ed efficace, utilizzabile dai cittadini, per ottenere un servizio veloce ed affidabile nella consultazione di archivi comunali per un servizio informativo migliore.
-
-# Come utilizzare l'applicazione
-
-Per utilizzare l'App è sufficiente installarla sul proprio dispositivo e selezionare i punti interattivi sulla mappa nella provincia di verona.
-
-# Description of the project (ENG)
-
-This app displays the schools of Verona.
-By clicking on each school will be possible to view its information
-App developed by [37100LAB](https://37100lab.comune.verona.it).
-
-#Technical informations
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Continuous delivery pipline for a cross-platform application build in ionic-react.
 
 ## Prerequisites
 
-You should have these installed on your OS.
+- [Nodejs 14](https://nodejs.org/en/)
+- [Docker](https://www.docker.com/)
+- [GitHub account](https://github.com)
+- [CircleCi account](https://circleci.com)
+- [AWS account](https://aws.amazon.com/)
+- [ThisDB api key and bucket](https://thisdb.com)
+- [Android Studio](https://developer.android.com/studio/) (optional)
+- [Xcode](https://developer.apple.com/xcode/) (optional)
 
-- Node.js
-- Android Studio
-- Xcode (Mac only)
+## Development
 
-## Available Scripts
+### Steps
 
-In the project directory, you can run:
+1. Start the project with docker-compose
 
-### `npm run add:device`
+```
+docker compose up -d
+```
 
-Adds a native build folder for a specific device (android or ios).
+## Production
 
-### `npm run sync`
+### Configuration
 
-Build and copy project files and assets and sync it with the native device directory.
+1. Open your AWS account and create an S3 bucket
+2. Inside your AWS account create and RDS PostgreSQL instance with Postgis extension
+3. Go to file ./infra/terraform/main.tf
+4. Change the AWS S3 bucket name to your bucket name
+5. Open geoserver console and change data store host configuration to your RDS instance
 
-### `npm run open`
+### Steps
 
-Opens the the native IDE for a specific device.
+1. Fork the repository
 
-### `npm run start`
+2. In you AWS account create an RDS PostgreSQL instance
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+3. Setup repository with CircleCi (Cancel workflow)
 
-### `npm run start:device`
+4. Inside CircleCi console, edit project settings to set environment variables
 
-Runs the app in the development mode on a physical device (android or ios).
+| KEY                   | VALUE                                    |
+| --------------------- | ---------------------------------------- |
+| AWS_ACCESS_KEY_ID     | {from IAM user with programmatic access} |
+| AWS_SECRET_ACCESS_KEY | {from IAM user with programmatic access} |
+| AWS_DEFAULT_REGION    | {your default region in aws}             |
+| DOCKERHUB_USERNAME    | {your dockerhub username}                |
+| DOCKERHUB_PASSWORD    | {your your dockerhub password}           |
+| THISDB_BUCKET         | {Your bucket name from thisdb.com}       |
+| THISDB_API_KEY        | {Your API key from thisdb.com}           |
 
-### `npm run test`
+5. Run the workflow again to deploy the project in your AWS infrastructure.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Built With
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- [Circle CI](www.circleci.com) - Cloud-based CI/CD service
+- [Amazon AWS](https://aws.amazon.com/) - Cloud services
+- [Terraform](https://www.terraform.io/) - Infrastructure as code
+- [Ansible](https://www.ansible.com/) - Configuration management tool
