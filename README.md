@@ -4,7 +4,7 @@
 
 ![pipeline](https://raw.githubusercontent.com/ahmedaidev/geoapp-latest/main/pipeline.jpg)
 
-Continuous delivery pipline for a cross-platform application build in ionic-react.
+A continuous delivery pipeline for a cross-platform application in ionic-react that is deployed on a highly-available and scalable infrastructure on AWS using a blue-green deployment strategy.
 
 ## Prerequisites
 
